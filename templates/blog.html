@@ -9,7 +9,10 @@
             {% for x in blogs %}
             <li>
             <a href="/single_blog?id={{x.id}}">{{x.title}}</a>
-            {{x.body}}
+            <div>
+                {{x.body}} 
+            </div>
+            
             <hr>
             {% endfor %}
         </li>

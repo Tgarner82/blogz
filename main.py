@@ -42,8 +42,7 @@ def index():
 
 @app.route('/blog', methods=['POST','GET'])
 def blog():
-    blog_owner = User.query.filter_by(username = session['username']).first()
-    blogs = Blog.query.filter_by(blog_owner=blog_owner).all()
+    blogs = Blog.query.all()
     return render_template('blog.html', blogs=blogs)
 
 @app.route('/single_blog', methods=['GET'])
@@ -51,6 +50,12 @@ def single_blog():
     blog_id = int(request.args.get('id'))
     blog = Blog.query.get(blog_id)
     return render_template('singleblog.html', blog=blog)
+
+@app.route('/userblog', methods=['GET'])
+def user_blog():
+    user_id = int(request.args.get('user'))
+    blogs = Blog.query.filter_by(owner_id=user_id)
+    return render_template('userblog.html', blogs=blogs)
    
 @app.route('/newpost', methods=['POST','GET'])
 def newpost():
@@ -62,6 +67,7 @@ def newpost():
         if len(blog_name) == 0 or len(blog_body) == 0:
             error = 'Please enter text.'
         else:
+            blog_owner = User.query.filter_by(username = session['username']).first()
             new_blog = Blog(blog_name, blog_body, blog_owner)
             db.session.add(new_blog)
             db.session.commit()
@@ -153,7 +159,7 @@ def login():
             session['username'] = username
             return redirect('/newpost')
         else:
-            return '<h1> Login Failed! </h1>'
+            return redirect('/signup')
   
     return render_template('login.html', error=error)
 
@@ -161,7 +167,7 @@ def login():
 @app.route('/logout', methods=['POST','GET'])
 def logout():
     del session['username']
-    return redirect('/login')
+    return redirect('/blog')
 
     
 if __name__ == '__main__':
