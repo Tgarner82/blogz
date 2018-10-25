@@ -127,12 +127,10 @@ def signup():
                             password=password
         if verify == '':
             verify_error = 'Please do not leave an empty field.'
-            verify_error = ''
         else:
             verify=verify
             if verify != password:
                 verify_error = 'Password must match.'
-                verify_error = ''
             else:
                 verify=verify
         if not user_error and not password_error and not verify_error:

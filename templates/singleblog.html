@@ -6,5 +6,5 @@
 <div>
     {{blog.body}}
 </div>
-
+Written By: <a href="/userblog?user={{blog.owner_id}}">{{blog.owner.username}}</a>
 {% endblock %}
