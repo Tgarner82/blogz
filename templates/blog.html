@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Build a Blog</h1>
+<h1>Blog Post from Authors</h1>
 
 <hr>
 
@@ -12,7 +12,7 @@
             <div>
                 {{x.body}} 
             </div>
-            Written by:<a href="/userblog?user={{x.owner_id}}">{{x.owner_id}}</a></div>
+            Written by:<a href="/userblog?user={{x.owner_id}}">{{x.owner.username}}</a></div>
             <hr>
             {% endfor %}
         </li>
